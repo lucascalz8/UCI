@@ -1,0 +1,6 @@
+org/foo/app/AppComponent$InternalFlowListener.class
+org/foo/app/AppComponent.class
+org/foo/app/AppComponent$PingPacketProcessor.class
+org/foo/app/AppComponent$PingPruner.class
+org/foo/app/AppComponent$PingRecord.class
+org/foo/app/AppComponent$1.class

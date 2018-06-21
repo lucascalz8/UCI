@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<script>
+function myGetElementById(id) {
+	var element;
+	if ( document.getElementById )
+		element = document.getElementById(id);
+	else
+		element = document.all[id];
+	return (element);
+}
+
+function myGetXmlHttpRequest() {
+	var xhr = false,
+		activeXoptions = new Array( "Microsoft.XmlHttp", "MSXML4.XmlHttp", "MSXML3.XmlHttp", "MSXML2.XmlHttp", "MSXML.XmlHttp" );
+	try {
+		xhr = new XMLHttpRequest(); 
+	} catch (e) { }
+	if ( !xhr ) {
+		var created = false; 
+		for ( var i = 0 ; i < activeXoptions.length && !created ; i++ ) {
+			try {
+				xhr = new ActiveXObject( activeXoptions[i] );
+				created = true;
+			} catch (e) { } 
+		}
+	}
+	return (xhr);
+}
+
+function loadAJAX(theUri, theXhr) {
+	theXhr.onreadystatechange = function() {
+		var element = myGetElementById('output');
+		if ( theXhr.readyState === 4 ) {
+			if ( theXhr.status === 200 ) {
+				
+				var result = theXhr.responseText;
+				element.innerHTML = result + "<br>";
+			} else {
+				element.innerHTML = "<h1>Error.<h1>";
+			} 
+		}
+	}
+
+	try {
+		theXhr.open("get", theUri, true);
+	}
+	catch (e) {
+		alert(e);
+	}
+	
+	theXhr.setRequestHeader("connection", "close");
+	
+	theXhr.send(null);
+}
+
+
+function load(uri) {
+	var xhr = myGetXmlHttpRequest();
+	if ( xhr )
+		loadAJAX(uri, xhr); 
+}
+</script>
+
+<body>
+<h1>Ciaooo.</h1>
+<div id="output"></div>
+
+<script>
+load('show');
+setTimeout(function() {
+	load('show');
+}, 5000);
+</script>
+
+</body>
+</html>
